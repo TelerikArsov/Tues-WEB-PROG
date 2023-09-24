@@ -81,7 +81,6 @@ describe("Custom Promise Implementation", () => {
 
     PromiseImplementation.reject("Error")
       .then((result) => {
-        console.log(result);
         expect(result).toBeUndefined();
       })
       .catch(errHandler);
