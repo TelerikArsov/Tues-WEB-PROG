@@ -1,5 +1,5 @@
-//const { PromiseImplementation } = require("../implementation/Promise");
-const PromiseImplementation = Promise;
+const { PromiseImplementation } = require("../implementation/Promise");
+//const PromiseImplementation = Promise;
 describe("Custom Promise Implementation", () => {
   // Test cases for resolving promises
   test("Resolving a promise with a value", (done) => {
