@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #div1 {
+        background: red;
+      }
+      .div2 {
+        background: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">Make request</button>
+    <script>
+      // const btn = document.getElementById("btn");
+
+      // function sendRequest(url, cb) {
+      //   return new Promise((resolve, reject) => {
+      //     const xmlHttpRequest = new XMLHttpRequest();
+      //     xmlHttpRequest.addEventListener("load", function (event) {
+      //       resolve(event, null);
+      //     });
+
+      //     xmlHttpRequest.addEventListener("error", function (event) {
+      //       reject(null, event);
+      //     });
+
+      //     xmlHttpRequest.open("GET", url);
+      //     xmlHttpRequest.send();
+      //   });
+      // }
+
+      // ...
+
+      // btn.addEventListener("click", function (event) {
+      //   sendRequest("https://hub.dummyapis.com/delay?seconds=1")
+      //     .then(function (event) {
+      //       // do something
+      //       return "result";
+      //     })
+      //     .then(() => {
+      //       return sendRequest(
+      //         "https://hub.dummyapis.com/delay?seconds=1",
+      //         function (event) {
+      //           console.log("finished2");
+      //         }
+      //       );
+      //     });
+      // });
+
+      function waitForClick() {
+        const btn = document.getElementById("btn");
+        return new Promise((resolve, reject) => {
+          btn.addEventListener("click", function (event) {
+            resolve(event);
+          });
+        });
+      }
+
+      async function f() {
+        console.log("A");
+        await waitForClick();
+        console.log("B");
+        await waitForClick();
+        console.log("C");
+      }
+
+      f();
+    </script>
+  </body>
+</html>

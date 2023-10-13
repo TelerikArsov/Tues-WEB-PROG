@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #div1 {
+        background: red;
+      }
+      .div2 {
+        background: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">Make request</button>
+    <script>
+      const btn = document.getElementById("btn");
+
+      function sendRequest(url, cb) {
+        const xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest.addEventListener("load", function (event) {
+          cb(event, null);
+        });
+
+        // xmlHttpRequest.addEventListener("error", function (event) {
+        //   errorCb(event);
+        // });
+
+        xmlHttpRequest.addEventListener("error", function (event) {
+          cb(null, event);
+        });
+
+        xmlHttpRequest.open("GET", url);
+        xmlHttpRequest.send();
+      }
+
+      // ...
+
+      btn.addEventListener("click", function (event) {
+        sendRequest(
+          "https://hub.dummyapis.com/delay?seconds=1",
+          function (event, error) {
+            if (error) {
+            } else {
+              console.log("finished1");
+              sendRequest(
+                "https://hub.dummyapis.com/delay?seconds=1",
+                function (event) {
+                  console.log("finished2");
+                }
+              );
+            }
+          }
+        );
+      });
+
+      // console.log("hello world");
+      // // const div1 = document.getElementById("div1");
+      // // const div1 = document.querySelector("#div1");
+      // const div1 = document.querySelector("#div1");
+      // const divs = document.querySelectorAll(".div2");
+      // console.log(divs);
+      // div1.innerHTML = "hello js";
+      // div1.style.color = "white";
+
+      // div1.addEventListener("click", function () {
+      //   callback();
+      // });
+
+      // let a = 5;
+
+      // setTimeout(() => {
+      //   a = 10;
+      //   console.log(a);
+      // }, 1000);
+
+      // console.log(a)
+
+      // const el = document.createElement("div");
+      // el.innerHTML = "Hello js";
+      // document.body.appendChild(el);
+
+      // el.style.display = "none";
+    </script>
+  </body>
+</html>

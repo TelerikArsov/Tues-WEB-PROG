@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .spinner1 {
+        width: 50px;
+        height: 50px;
+        background: blue;
+        transition-duration: 0.8s;
+        transition-property: transform;
+        display: inline-block;
+      }
+      .spinner1:hover {
+        transform: rotate(180deg);
+      }
+
+      /* rotate all the time */
+      .spinner2 {
+        width: 50px;
+        height: 50px;
+        background: red;
+        animation-name: rotate;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        display: inline-block;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <textarea>
+      Some text
+    </textarea>
+    <button id="reload">Reload</button>
+    <div class="spinner1">S</div>
+    <!-- <div class="spinner2">S</div> -->
+    <h1>Blocking</h1>
+    <label for="quota">Number of primes:</label>
+    <input type="text" id="quota" name="quota" value="1000000" />
+
+    <button id="generate">Generate primes</button>
+
+    <pre id="output"></pre>
+
+    <button id="syncWait">sync wait</button>
+    <pre id="syncWaitOutput"></pre>
+
+    <button id="alert">Alert</button>
+
+    <h1>Non-blocking</h1>
+
+    <button id="xhr">Click to start request</button>
+
+    <button id="setTimeout">setTimeout</button>
+    <pre id="timeoutOutput"></pre>
+
+    <pre readonly class="event-log"></pre>
+  </body>
+  <script>
+    function syncWait(ms) {
+      const start = Date.now();
+      while (Date.now() - start < ms) {}
+    }
+
+    document.querySelector("#syncWait").addEventListener("click", () => {
+      syncWait(3000);
+      document.querySelector("#syncWaitOutput").textContent +=
+        "Finished waiting\n";
+    });
+
+    const MAX_PRIME = 1000000;
+
+    function isPrime(n) {
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+          return false;
+        }
+      }
+      return n > 1;
+    }
+
+    const random = (max) => Math.floor(Math.random() * max);
+
+    function generatePrimes(quota) {
+      const primes = [];
+      while (primes.length < quota) {
+        const candidate = random(MAX_PRIME);
+        if (isPrime(candidate)) {
+          primes.push(candidate);
+        }
+      }
+      return primes;
+    }
+
+    const quota = document.querySelector("#quota");
+    const output = document.querySelector("#output");
+
+    document.querySelector("#generate").addEventListener("click", () => {
+      const primes = generatePrimes(quota.value);
+      output.textContent = `${output.textContent}\nFinished generating ${quota.value} primes!`;
+    });
+
+    document.querySelector("#reload").addEventListener("click", () => {
+      document.location.reload();
+    });
+
+    const log = document.querySelector(".event-log");
+
+    document.querySelector("#xhr").addEventListener("click", () => {
+      // log.textContent = "";
+
+      const xhr = new XMLHttpRequest();
+
+      xhr.addEventListener("load", () => {
+        log.textContent = `${log.textContent}Finished with status: ${xhr.status}\n`;
+      });
+
+      xhr.open("GET", "https://hub.dummyapis.com/delay?seconds=5");
+      xhr.send();
+      log.textContent = `${log.textContent}Started XHR request\n`;
+    });
+
+    document.querySelector("#setTimeout").addEventListener("click", () => {
+      setTimeout(() => {
+        document.querySelector("#timeoutOutput").textContent +=
+          "Finished setTimeout\n";
+      }, 3000);
+    });
+
+    document.querySelector("#alert").addEventListener("click", () => {
+      alert("Hello");
+    });
+  </script>
+</html>
