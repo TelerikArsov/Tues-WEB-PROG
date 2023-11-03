@@ -1,0 +1,21 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+{{!-- {{#each comments}}
+  <h2>{{name}}</h2>
+  <div>{{comment}}</div>
+{{/each}} --}}
+
+<div id="messages">
+
+</div>
+
+<form method="POST">
+  Name:
+  <input type="text" name="name" /><br />
+  Message:
+  <input type="text" name="content" /><br />
+  <input type="submit" value="Send" />
+</form>
+
+<script src="/javascripts/main.js"></script>
