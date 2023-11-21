@@ -1,7 +1,7 @@
 const slowdown = 1000;
 
 const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database("/tmp/database1.db");
+const db = new sqlite3.Database("/tmp/database2.db");
 db.run(
   "CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY, title TEXT, content TEXT)"
 );
