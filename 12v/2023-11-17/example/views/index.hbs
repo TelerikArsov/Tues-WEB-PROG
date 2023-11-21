@@ -1,1 +1,11 @@
 Hello World!
+
+<form method="POST">
+  <input type="text" name="title" placeholder="Title" />
+  <input type="text" name="content" placeholder="Content" />
+  <input type="submit" value="Create" />
+</form>
+{{#each posts}}
+  <h2>{{title}}</h2>
+  <p>{{content}}<a href="/post/{{id}}">Read more</a></p>
+{{/each}}
